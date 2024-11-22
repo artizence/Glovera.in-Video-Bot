@@ -2,7 +2,7 @@
 export default function Home() {
   return (
     <div>
-      <button className="btn w-64 rounded-full">Button</button>
+      <h1>hello world</h1>
     </div>
   );
 }

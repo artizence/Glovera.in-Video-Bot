@@ -16,8 +16,6 @@ export default {
   },
   plugins: [require("daisyui")],
   daisyui: {
-    themes: [
-      "light", "dark", "synthwave", "sunset", "night", "dim"
-    ]
-  }
+    themes: ["light", "dark", "synthwave", "sunset", "night", "dim"],
+  },
 } satisfies Config;
