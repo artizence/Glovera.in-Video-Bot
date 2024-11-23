@@ -1,13 +1,14 @@
 "use client";
 
 import { getCookie, setCookie } from "cookies-next/client";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { ChangeEvent, useEffect, useState } from "react";
 
 export function ToggleThemeComponent() {
   const themes = ["light", "dark", "synthwave", "sunset", "night", "dim"];
   const [currentTheme, setCurrentTheme] = useState("light");
   const router = useRouter();
+  const pathname = usePathname()
 
   useEffect(() => {
     setCurrentTheme(getCookie("theme") || "light");
@@ -20,6 +21,7 @@ export function ToggleThemeComponent() {
     router.refresh();
   };
 
+  if(pathname != "/chat")
   return (
     <div className="dropdown dropdown-top dropdown-end absolute bottom-0 right-0 md:m-5 mx-5 my-2">
       <div tabIndex={0} role="button" className="btn m-1 btn-primary">
