@@ -17,7 +17,6 @@ export async function getAccessToken(): Promise<string> {
       }
     );
     const data = await res.json();
-    console.log(data.data.token)
     return data.data.token;
   } catch (error) {
     console.error("Error retrieving access token:", error);

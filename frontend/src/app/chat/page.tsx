@@ -1,65 +1,50 @@
 "use client";
-import StreamingAvatar, {
-  AvatarQuality,
-  StreamingEvents,
-  VoiceEmotion,
-} from "@heygen/streaming-avatar";
-import { useEffect, useState } from "react";
-import { getAccessToken } from "./_lib";
+
+import StreamingAvatar from "@heygen/streaming-avatar";
+import { useEffect, useRef, useState } from "react";
+import { createChatBot, speak } from "./_lib";
+import { Error, Loading } from "./_components";
 
 function ChatBot() {
   const [avatar, setAvatar] = useState<StreamingAvatar | null>(null);
-
-  const startChatCreation = async () => {
-    const access_token = await getAccessToken();
-    const streamingAvatar = new StreamingAvatar({
-      token: access_token,
-    });
-
-    streamingAvatar.on(StreamingEvents.AVATAR_START_TALKING, (e) => {
-      console.log(e);
-    });
-    streamingAvatar.on(StreamingEvents.STREAM_DISCONNECTED, () => {
-      console.log("disconnected");
-    });
-    streamingAvatar.on(StreamingEvents.STREAM_READY, (event) => {
-      console.log(event);
-    });
-
-    const sessionInfo = await streamingAvatar.createStartAvatar({
-      quality: AvatarQuality.Medium,
-      avatarName: "Georgia",
-    //   avatarId: "1727672614",
-    //   voice: {
-    //     rate: 1.5,
-    //     emotion: VoiceEmotion.EXCITED,
-    //   },
-    });
-    setAvatar(streamingAvatar);
-  };
+  const [stream, setStream] = useState(null);
+  const video = useRef<HTMLVideoElement>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
+  const [inputText, setInputText] = useState("");
 
   useEffect(() => {
-    startChatCreation();
-
-    // () => {
-    //   avatar?.closeVoiceChat();
-    // };
+    createChatBot({
+      setAvatar,
+      setError,
+      setLoading,
+      setStream,
+    });
+    return () => {
+      avatar?.stopAvatar();
+    };
   }, []);
+
+  useEffect(() => {
+    if (!stream || !video.current) return;
+    video.current.srcObject = stream;
+    video.current.onloadedmetadata = async () => {
+      setLoading(false);
+      video.current!.play();
+    };
+  }, [stream, video]);
+
+  if (error) return <Error />;
+  if (loading) return <Loading />;
 
   return (
     <main>
-      <div className="w-full h-screen">
-        <video
-          src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4"
-          autoPlay
-          loop
-          muted
-          className="w-full h-full object-cover"
-        ></video>
+      <div className="w-full h-screen flex justify-center">
+        <video ref={video} className="h-screen"></video>
       </div>
       <div className="flex gap-4 absolute bottom-5 left-1/2 -translate-x-1/2 w-full max-w-md px-4">
-        <input type="text" className="input input-bordered w-full" />
-        <button className="btn btn-primary">send</button>
+        <input type="text" className="input input-bordered w-full" onChange={(e) => { setInputText(e.target.value) }} />
+        <button className="btn btn-primary" onClick={() => { speak(avatar, inputText) }}>send</button>
         <button className="btn btn-primary">mic</button>
       </div>
     </main>

@@ -9,5 +9,6 @@ export async function login(data : FormData) {
 
 
 export async function signup(data: FormData) {
+    console.log(data)
     redirect("/student/login")
 }

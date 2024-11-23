@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { login } from "../_lib";
 
 function Login() {
@@ -36,6 +37,9 @@ function Login() {
               />
             </div>
           ))}
+          <Link href={"/student/signup"} className="btn btn-active btn-link btn-xs float-end mb-1">
+            Don&apos;t have an account?
+          </Link>
           <button type="submit" className="btn btn-primary w-full">
             Continue
           </button>
