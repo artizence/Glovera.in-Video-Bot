@@ -23,7 +23,7 @@ export function ToggleThemeComponent() {
 
   if(pathname != "/chat")
   return (
-    <div className="dropdown dropdown-top dropdown-end absolute bottom-0 right-0 md:m-5 mx-5 my-2">
+    <div className="dropdown dropdown-top dropdown-end absolute bottom-0 right-0 md:m-5 mx-5 my-2 dropdown-hover">
       <div tabIndex={0} role="button" className="btn m-1 btn-primary">
         {currentTheme.charAt(0).toUpperCase() + currentTheme.substring(1)}
       </div>

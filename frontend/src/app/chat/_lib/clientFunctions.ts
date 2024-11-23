@@ -21,6 +21,7 @@ export async function createChatBot({
   setLoading,
   setStream,
 }: Props) {
+  setLoading(true)
   const access_token = await getAccessToken();
   const streamingAvatar = new StreamingAvatar({
     token: access_token,
