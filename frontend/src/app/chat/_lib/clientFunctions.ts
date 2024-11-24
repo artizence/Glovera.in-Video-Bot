@@ -28,6 +28,7 @@ export async function createChatBot({
   const streamingAvatar = new StreamingAvatar({
     token: access_token,
   });
+  const avatarIds = ["Briana_public_3_20240110", "Kristin_public_2_20240108"]
 
   streamingAvatar.on(StreamingEvents.STREAM_DISCONNECTED, () => {
     streamingAvatar.stopAvatar();
@@ -44,7 +45,7 @@ export async function createChatBot({
   try {
     const sessionData = await streamingAvatar.createStartAvatar({
       quality: AvatarQuality.High,
-      avatarName: "Anna_public_3_20240108",
+      avatarName: avatarIds[0],
       voice: {
         rate: 1.5,
         emotion: VoiceEmotion.EXCITED,
