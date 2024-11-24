@@ -7,8 +7,7 @@ export function NavBar() {
         <a className="btn btn-ghost text-xl"> Counselling.com</a>
       </div>
       <div className="flex-none">
-        <Link href={"/student/signup"} className="btn btn-link">Sign up</Link>
-        <Link href={"/student/login"} className="btn btn-primary">Login</Link>
+        <Link href={"/detail/personal"} className="btn btn-primary">Get Started</Link>
       </div>
     </nav>
   );

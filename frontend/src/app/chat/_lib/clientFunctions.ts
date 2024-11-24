@@ -7,6 +7,7 @@ import StreamingAvatar, {
 } from "@heygen/streaming-avatar";
 import { getAccessToken } from "./api";
 import { Dispatch, SetStateAction } from "react";
+import { questions } from "../questions";
 
 type Props = {
   setAvatar: Dispatch<SetStateAction<StreamingAvatar | null>>;
@@ -14,6 +15,7 @@ type Props = {
   setStream: Dispatch<SetStateAction<null>>;
   setError: Dispatch<SetStateAction<boolean>>;
   setConnection: Dispatch<SetStateAction<boolean>>;
+  setButtonDisabled: Dispatch<SetStateAction<boolean>>;
 };
 
 export async function createChatBot({
@@ -22,6 +24,7 @@ export async function createChatBot({
   setLoading,
   setStream,
   setConnection,
+  setButtonDisabled
 }: Props) {
   setLoading(true)
   const access_token = await getAccessToken();
@@ -37,8 +40,11 @@ export async function createChatBot({
     setConnection(true)
     setLoading(false);
     setStream(event.detail);
+    speak(streamingAvatar, "Welcome to our counseling session—this is a safe space for you to share, reflect, and grow together!")
+    speak(streamingAvatar, questions[0].question)
   });
   streamingAvatar.on(StreamingEvents.AVATAR_STOP_TALKING, (e) => {
+    setButtonDisabled(false)
     console.log(e)
   })
 
@@ -48,7 +54,7 @@ export async function createChatBot({
       avatarName: avatarIds[0],
       voice: {
         rate: 1.5,
-        emotion: VoiceEmotion.EXCITED,
+        emotion: VoiceEmotion.FRIENDLY,
       },
     });
     console.log(sessionData)

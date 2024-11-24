@@ -1,17 +1,24 @@
 "use client";
-import StreamingAvatar from "@heygen/streaming-avatar";
 import { useReactMediaRecorder } from "react-media-recorder";
-import { speak, transcribeAudio } from "../_lib";
+import { transcribeAudio } from "../_lib";
+import { Dispatch, SetStateAction } from "react";
+import { questions } from "../questions";
 
 type Prop = {
-  avatar: StreamingAvatar | null;
-  text: string;
+  setQuestion: Dispatch<SetStateAction<number>>;
+  setDisableButton: Dispatch<SetStateAction<boolean>>
+  disabledButton: boolean;
 };
 
-export default function Mic({avatar}: Prop) {
+export default function Mic({setDisableButton, setQuestion, disabledButton}: Prop) {
   const onStopRecording = async (blobUrl: string, blob: Blob) => {
     const text = await transcribeAudio(blob)
-    speak(avatar, text)
+    setQuestion((val) => {
+      console.log(val)
+      localStorage.setItem(questions[val].name, text);
+      return val + 1
+    })
+    setDisableButton(true)
   };
 
   const { status, startRecording, stopRecording } = useReactMediaRecorder({
@@ -31,7 +38,7 @@ export default function Mic({avatar}: Prop) {
         status === "recording" ? "btn-primary" : "btn-neutral"
       } swap`}
     >
-      <input type="checkbox" onChange={toggleRecording} />
+      <input type="checkbox" onChange={toggleRecording} disabled={disabledButton} />
       {status !== "recording" ? (
         <svg
           xmlns="http://www.w3.org/2000/svg"

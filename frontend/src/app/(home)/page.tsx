@@ -24,7 +24,7 @@ export default function Home() {
                 conversations. Join us today to take the first step towards a
                 brighter tomorrow!
               </p>
-              <Link href={"/student/signup"} className="btn btn-primary w-full">Get Started</Link>
+              <Link href={"/details/personal"} className="btn btn-primary w-full">Get Started</Link>
             </div>
           </div>
           <div className="hidden md:flex justify-center w-full">
