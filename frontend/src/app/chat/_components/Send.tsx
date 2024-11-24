@@ -1,17 +1,25 @@
-import StreamingAvatar from "@heygen/streaming-avatar";
-import { speak } from "../_lib";
+import { Dispatch, SetStateAction } from "react";
+import { questions } from "../questions";
 
 type Prop = {
-  avatar: StreamingAvatar | null;
+  setQuestion: Dispatch<SetStateAction<number>>;
   text: string;
+  setDisableButton: Dispatch<SetStateAction<boolean>>
+  disabledButton: boolean;
 };
 
-export function Send({ avatar, text }: Prop) {
+export function Send({ setQuestion, text, setDisableButton, disabledButton }: Prop) {
   return (
     <button
+      disabled={disabledButton}
       className="btn btn-primary"
       onClick={() => {
-        speak(avatar, text);
+        setQuestion((val) => {
+          console.log(val)
+          localStorage.setItem(questions[val].name, text);
+          return val + 1
+        })
+        setDisableButton(true)
       }}
     >
       <svg

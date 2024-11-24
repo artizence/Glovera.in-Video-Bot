@@ -6,6 +6,7 @@ import { transcribeAudio } from "@/app/chat/_lib";
 export default function Mic() {
   const onStopRecording = async (blobUrl: string, blob: Blob) => {
     const text = await transcribeAudio(blob)
+    console.log(text)
   };
 
   const { status, startRecording, stopRecording } = useReactMediaRecorder({
