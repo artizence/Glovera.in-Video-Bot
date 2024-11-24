@@ -5,6 +5,7 @@ import { useEffect, useRef, useState } from "react";
 import { createChatBot } from "./_lib";
 import { Error, Loading, Send } from "./_components";
 import dynamic from "next/dynamic";
+import Link from "next/link";
 
 const Mic = dynamic(() => import("./_components/Microphone"), { ssr: false });
 
@@ -72,6 +73,7 @@ function ChatBot() {
           </>
         )}
       </div>
+      <Link href={"/test"} className="btn btn-accent absolute left-2 top-2">Test our ai bot</Link>
     </main>
   );
 }

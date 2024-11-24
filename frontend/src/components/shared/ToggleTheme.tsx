@@ -4,7 +4,11 @@ import { getCookie, setCookie } from "cookies-next/client";
 import { usePathname, useRouter } from "next/navigation";
 import { ChangeEvent, useEffect, useState } from "react";
 
-export function ToggleThemeComponent() {
+type Props = {
+  top? : boolean;
+}
+
+export function ToggleThemeComponent({ top } : Props) {
   const themes = ["light", "dark", "synthwave", "sunset", "night", "dim"];
   const [currentTheme, setCurrentTheme] = useState("light");
   const router = useRouter();
@@ -21,9 +25,11 @@ export function ToggleThemeComponent() {
     router.refresh();
   };
 
-  if(pathname != "/chat")
+  if(pathname === "/test") top = true
+
+  if(pathname !== "/chat")
   return (
-    <div className="dropdown dropdown-top dropdown-end absolute bottom-0 right-0 md:m-5 mx-5 my-2 dropdown-hover">
+    <div className={`dropdown absolute ${!top ? "dropdown-top dropdown-end bottom-0" : "top-0 dropdown-end"} right-0 md:m-5 mx-5 my-2 dropdown-hover`}>
       <div tabIndex={0} role="button" className="btn m-1 btn-primary">
         {currentTheme.charAt(0).toUpperCase() + currentTheme.substring(1)}
       </div>
