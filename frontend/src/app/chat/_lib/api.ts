@@ -1,5 +1,11 @@
 "use server";
 
+import OpenAI, { toFile } from "openai";
+
+const openai = new OpenAI({
+  apiKey: process.env.OPEN_AI_API_KEY
+})
+
 export async function getAccessToken(): Promise<string> {
     const API_KEY = process.env.HEYGEN_API_KEY
   try {
@@ -22,4 +28,15 @@ export async function getAccessToken(): Promise<string> {
     console.error("Error retrieving access token:", error);
     throw new Error("F/ailed to retrive access token");
   }
+}
+
+
+export async function transcribeAudio(data: Blob): Promise<string> {
+  const response = await openai.audio.transcriptions.create({
+    file: await toFile(data),
+    model: "whisper-1",
+    language: "en"
+  })
+  console.log(response)
+  return response.text
 }

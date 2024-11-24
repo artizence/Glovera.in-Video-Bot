@@ -16,8 +16,8 @@ export default function Home() {
                 Welcome to Counselling.com, your digital sanctuary for emotional
                 well-being. Our innovative platform harnesses the power of
                 artificial intelligence to provide you with personalized
-                counseling and support, anytime and anywhere. Whether you're
-                navigating life's challenges or seeking to enhance your mental
+                counseling and support, anytime and anywhere. Whether you&apos;re
+                navigating life&apos;s challenges or seeking to enhance your mental
                 wellness, our empathetic AI companions are here to listen, guide,
                 and empower you on your journey. Experience the future of mental
                 health care with confidential, accessible, and tailored

@@ -11,8 +11,9 @@ import { Dispatch, SetStateAction } from "react";
 type Props = {
   setAvatar: Dispatch<SetStateAction<StreamingAvatar | null>>;
   setLoading: Dispatch<SetStateAction<boolean>>;
-  setStream: Dispatch<SetStateAction<any | null>>;
+  setStream: Dispatch<SetStateAction<null>>;
   setError: Dispatch<SetStateAction<boolean>>;
+  setConnection: Dispatch<SetStateAction<boolean>>;
 };
 
 export async function createChatBot({
@@ -20,6 +21,7 @@ export async function createChatBot({
   setError,
   setLoading,
   setStream,
+  setConnection,
 }: Props) {
   setLoading(true)
   const access_token = await getAccessToken();
@@ -31,6 +33,7 @@ export async function createChatBot({
     streamingAvatar.stopAvatar();
   });
   streamingAvatar.on(StreamingEvents.STREAM_READY, (event) => {
+    setConnection(true)
     setLoading(false);
     setStream(event.detail);
   });
@@ -47,7 +50,9 @@ export async function createChatBot({
         emotion: VoiceEmotion.EXCITED,
       },
     });
+    console.log(sessionData)
   } catch (err) {
+    console.log(err)
     setError(true);
   }
 

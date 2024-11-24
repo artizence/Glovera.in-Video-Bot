@@ -2,8 +2,11 @@
 
 import StreamingAvatar from "@heygen/streaming-avatar";
 import { useEffect, useRef, useState } from "react";
-import { createChatBot, speak } from "./_lib";
-import { Error, Loading, Mic, Send } from "./_components";
+import { createChatBot } from "./_lib";
+import { Error, Loading, Send } from "./_components";
+import dynamic from "next/dynamic";
+
+const Mic = dynamic(() => import("./_components/Microphone"), { ssr: false });
 
 function ChatBot() {
   const [avatar, setAvatar] = useState<StreamingAvatar | null>(null);
@@ -25,7 +28,6 @@ function ChatBot() {
     video.current.srcObject = stream;
     video.current.onloadedmetadata = async () => {
       setLoading(false);
-      setConnection(true);
       video.current!.play();
     };
   }, [stream, video]);
@@ -43,12 +45,13 @@ function ChatBot() {
           <button
             className="btn btn-primary w-full"
             onClick={() => {
-              setConnection(true)
+              setConnection(true);
               createChatBot({
                 setAvatar,
                 setError,
                 setLoading,
                 setStream,
+                setConnection,
               });
             }}
           >

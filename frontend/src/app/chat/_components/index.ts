@@ -1,6 +1,6 @@
 import { Error } from "./error";
 import { Loading } from "./loading";
-import { Mic } from "./Microphone";
+import Mic from "./Microphone";
 import { Send } from "./Send";
 
 export {
