@@ -2,7 +2,7 @@
 
 import StreamingAvatar from "@heygen/streaming-avatar";
 import { useEffect, useRef, useState } from "react";
-import { createChatBot, speak } from "./_lib";
+import { createChatBot, saveProgram, speak } from "./_lib";
 import { Error, Loading, Send } from "./_components";
 import dynamic from "next/dynamic";
 import Link from "next/link";
@@ -29,24 +29,13 @@ function ChatBot() {
 
   useEffect(() => {
     if (currentQuestionIdx >= questions.length) {
-      speak(avatar, "We are evaluating your results.");
-      submitForm()
+      saveProgram()
+      speak(avatar, "Thanks your form is submitted.");
       return;
     }
 
     speak(avatar, questions[currentQuestionIdx].question);
   }, [currentQuestionIdx]);
-
-  const submitForm = () => {
-    type obj = {
-      [key: string]: string
-  }
-    const data : obj = {}
-    questions.forEach((el) => {
-      data[el.name] = localStorage.getItem(el.name)!
-    })
-
-  }
 
   useEffect(() => {
     if (!stream || !video.current) return;

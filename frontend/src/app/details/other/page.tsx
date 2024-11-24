@@ -1,38 +1,39 @@
-"use client"
+"use client";
 
 import { useRouter } from "next/navigation";
-import { saveToLocalStorage } from "../_lib";
+import { saveStudent, saveToLocalStorage } from "../_lib";
 
 function Details() {
-  const router = useRouter()
+  const router = useRouter();
   const data = [
     {
       question: "Email",
       type: "email",
       class: "input input-bordered",
       placeholder: "123@gm.com",
-      name: "email"
+      name: "email",
     },
     {
       question: "Program Looking For",
       type: "text",
       class: "input input-bordered",
       placeholder: "Program Name",
-      name: "program_looking_for"
+      name: "program_looking_for",
     },
     {
       question: "Education Qualification",
       type: "text",
       class: "input input-bordered",
       placeholder: "Qualifications",
-      name: "education_qualification"
-    }
+      name: "education_qualification",
+    },
   ];
 
-  const handleSubmit = (data: FormData) => {
-    saveToLocalStorage("basic-details", data)
-    router.push("/details/school")
-  }
+  const handleSubmit = async (data: FormData) => {
+    saveToLocalStorage("basic-details", data);
+    await saveStudent();
+    router.push("/chat");
+  };
 
   return (
     <>

@@ -1,10 +1,10 @@
 const questions = [
   {
-    question: "Please tell the name of the program you want to enroll in?",
+    question: "Please tell the name of the program?",
     name: "name",
   },
   {
-    question: "What is the level of the program you want to get in?",
+    question: "What is the level of the program you mentioned above?",
     name: "level",
   },
   {
